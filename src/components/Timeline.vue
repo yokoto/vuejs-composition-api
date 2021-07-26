@@ -1,9 +1,9 @@
 <template>
   <nav class="is-primary panel">
     <span class="panel-tabs">
-      <a>Today</a>
-      <a>This Week</a>
-      <a>This Month</a>
+      <a v-for="period in periods">
+        {{ period }}
+      </a>
     </span>
   </nav>
   <h1>Timeline</h1>
@@ -14,6 +14,14 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'Timeline',
+
+  setup() {
+    const periods = ['Today', 'This Week', 'This Month']
+
+    return {
+      periods
+    }
+  }
 });
 </script>
 
