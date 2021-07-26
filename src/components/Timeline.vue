@@ -1,25 +1,38 @@
 <template>
   <nav class="is-primary panel">
     <span class="panel-tabs">
-      <a v-for="period in periods">
+      <a
+        v-for="period in periods"
+        :key="period"
+        :class="{ 'is-active': period === currentPeriod }"
+        @click="setPeriod(period)"
+      >
         {{ period }}
       </a>
     </span>
   </nav>
-  <h1>Timeline</h1>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+
+type Period = 'Today' | 'This Week' | 'This Month'
 
 export default defineComponent({
   name: 'Timeline',
 
   setup() {
     const periods = ['Today', 'This Week', 'This Month']
+    const currentPeriod = ref<Period>('Today')
+
+    const setPeriod = (period: Period) => {
+      currentPeriod.value = period
+    }
 
     return {
-      periods
+      periods,
+      setPeriod,
+      currentPeriod
     }
   }
 });
