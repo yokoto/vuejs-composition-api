@@ -9,7 +9,7 @@ export interface Post {
 export const today: Post = {
   id: '1',
   title: 'Today',
-  created: moment()
+  created: moment().subtract(1, 'second')
 }
 
 export const thisWeek: Post = {
