@@ -5,7 +5,7 @@
       <input
         class="input"
         :type="type"
-        v-model="modelValue"
+        :value="modelValue"
         @input="handleInput"
       />
       <p class="is-danger help">{{ error }}</p>
