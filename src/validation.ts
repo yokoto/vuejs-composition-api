@@ -53,7 +53,7 @@ export function validate(value: string | undefined, validators: Validator[]): St
       ) {
         return {
           valid: false,
-          message: `This value must be between ${validator.options.min} adn ${validator.options.max}.`
+          message: `This value must be between ${validator.options.min} and ${validator.options.max}.`
         }
       }
     }
