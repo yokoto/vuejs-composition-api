@@ -23,7 +23,7 @@ interface PostsState {
   loaded: boolean
 }
 
-class Store {
+export class Store {
   private state: State
 
   constructor(initial: State) {
@@ -42,7 +42,6 @@ class Store {
     const response = await axios.post<Post>('/posts', post)
     this.state.posts.all.set(post.id, response.data)
     this.state.posts.ids.push(post.id)
-    console.log(response)
   }
 
   async createUser(user: User) {
