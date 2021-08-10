@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, h } from 'vue';
+import { computed, defineComponent, h, markRaw } from 'vue';
 import Signup from '../components/Signup.vue'
 import { useModal } from '../useModal'
 import { useStore } from '../store'
@@ -70,11 +70,11 @@ export default defineComponent({
           return () => h('div', 'Demo')
         }
       })
-      modal.component.value = Demo
+      modal.component.value = markRaw(Demo)
       modal.showModal()
     }
     const signUp = () => {
-      modal.component.value = Signup
+      modal.component.value = markRaw(Signup)
       modal.showModal()
     }
     const signOut = () => {}
