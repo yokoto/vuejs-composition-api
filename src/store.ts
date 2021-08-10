@@ -1,10 +1,17 @@
-import { reactive, readonly } from 'vue'
+import { reactive, readonly, provide, inject, App } from 'vue'
 import axios from 'axios'
 import { Post, today, thisWeek, thisMonth } from './mocks'
 
+export interface User {
+  id: string
+  username: string
+  password: string
+}
 interface State {
   posts: PostsState
 }
+
+const storeKey = Symbol('store')
 
 interface PostsState {
   // o(n)
@@ -16,15 +23,30 @@ interface PostsState {
   loaded: boolean
 }
 
-class Store {
+export class Store {
   private state: State
 
   constructor(initial: State) {
     this.state = reactive(initial)
   }
 
+  install(app: App) {
+    app.provide(storeKey, this)
+  }
+
   getState() {
     return readonly(this.state)
+  }
+
+  async createPost(post: Post) {
+    const response = await axios.post<Post>('/posts', post)
+    this.state.posts.all.set(post.id, response.data)
+    this.state.posts.ids.push(post.id)
+  }
+
+  async createUser(user: User) {
+    // ...
+    console.log(user)
   }
 
   async fetchPosts() {
@@ -38,12 +60,13 @@ class Store {
       this.state.posts.ids.push(post.id)
       this.state.posts.all.set(post.id, post)
     }
+
     this.state.posts.loaded = true
   }
 }
 const all = new Map<string, Post>()
 
-const store = new Store({
+export const store = new Store({
   posts: {
     all,
     ids: [],
@@ -54,8 +77,16 @@ const store = new Store({
 // use 
 // composable
 // provide inject
-export function useStore() {
-  return store
+export function useStore(): Store {
+  const _store = inject<Store>(storeKey)
+  if (!_store) {
+    throw Error('Did you forgot to call provide?')
+  }
+
+  return _store
 }
 
 store.getState().posts.loaded
+
+// inject('store')
+// provide('store', store)
