@@ -3,6 +3,7 @@
     v-if="conEdit"
     :to="`/posts/${post.id}/edit`"
     class="button is-link is-rounded"
+    data-test="can-edit"
   >
   Edit
   </router-link>
