@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import axios from 'axios'
-import { thisMonth, thisWeek, today } from './mocks'
+import { thisMonth, thisWeek, today, Post } from './mocks'
 import { routerWithStore } from './router'
 import random from 'lodash/random';
 import 'highlight.js/styles/atom-one-dark.css'
@@ -28,8 +28,13 @@ axios.post = async (url: string, payload: any) => {
   if (url === '/posts') {
     const id = random(100, 100000)
     await delay()
-    return Promise.resolve({
-      data: { ...payload, id }
+    const post: Post = {
+      id: id.toString(),
+      title: payload.title,
+      created: payload.created
+    }
+    return Promise.resolve<{ data: Post }>({
+      data: post
     })
   }
 
