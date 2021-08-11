@@ -28,7 +28,13 @@ describe('NewPost', () => {
       all: new Map(),
       ids: [],
       loaded: false
-    }
+    },
+    authors: {
+      ids: ['100'],
+      all: new Map([['100', { username: 'username', id: '100' }]]),
+      loaded: false,
+      currentUserId: '100'
+    }  
   })
 
   beforeEach(() => {
