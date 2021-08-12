@@ -29,7 +29,36 @@ axios.post = async (url: string, payload: any) => {
     const id = random(100, 100000)
     await delay()
     const post: Post = {
+      ...payload,
       id: id.toString(),
+      title: payload.title,
+      created: payload.created,
+      authorId: payload.authorId
+    }
+    return Promise.resolve<{ data: Post }>({
+      data: post
+    })
+  }
+
+  if (url === '/users') {
+    const id = random(100, 100000)
+    await delay()
+    const author: Author = {
+      id: id.toString(),
+      username: payload.username
+    }
+    return Promise.resolve({
+      data: author
+    })
+  }
+}
+
+// @ts-ignore
+axios.put = async (url: string, payload: any) => {
+  if (url === '/posts') {
+    await delay()
+    const post: Post = {
+      ...payload,
       title: payload.title,
       created: payload.created,
       authorId: payload.authorId
